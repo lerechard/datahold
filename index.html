@@ -10,8 +10,22 @@
       font-family: 'Inter', sans-serif;
       background: linear-gradient(to right, #e0f7fa, #e0f2f1);
       text-align: center;
-      padding: 2rem;
+      padding: 0 1rem;
       margin: 0;
+    }
+    header {
+      background-color: #004d40;
+      padding: 1.5rem 0;
+      width: 100vw;
+      margin-left: calc(-1 * (100vw - 100%));
+      box-sizing: border-box;
+    }
+    .logo {
+      max-width: 160px;
+      display: flex;
+      margin: 0 auto;
+      justify-content: center;
+      align-items: center;
     }
     .container {
       background: white;
@@ -70,9 +84,29 @@
     a:hover {
       text-decoration: underline;
     }
+    .footer-info {
+      max-width: 600px;
+      margin: 2rem auto;
+      text-align: center;
+      color: #004d40;
+    }
+    .footer-info p {
+      margin: 0.5rem 0;
+      font-weight: 500;
+    }
+    .copyright {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #004d40;
+      margin-top: 2rem;
+    }
   </style>
 </head>
 <body>
+  <header>
+    <img src="logo.png" alt="Datahold Logo" class="logo">
+  </header>
+
   <div class="container" id="main">
     <h1>DATAHOLD</h1>
     <label for="numFields">Number of Fields:</label>
@@ -98,6 +132,14 @@
       <br>
       <button class="copy-btn" onclick="copyShareLink()">Copy Link</button>
     </div>
+  </div>
+
+  <div class="footer-info">
+    <p>We are dedicated to user privacy, ensuring safe and secure data transmission with a platform trusted by professionals to safeguard sensitive content. At DATAHOLD, your trust is our top priority. We use industry-standard security practices and never share your data. Every piece of information is handled with care and confidentiality.</p>
+  </div>
+
+  <div class="copyright">
+    &copy; Fiscon Technologies 2025
   </div>
 
   <script>
