@@ -21,28 +21,31 @@
     body {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 2rem 1rem;
     }
 
     header {
-      width: 100%;
       background-color: #2196f3;
       height: 100px;
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 2rem;
+      flex-shrink: 0;
     }
 
     .logo {
       max-height: 100%;
       max-width: 71.43vw;
-      width: auto;
-      height: auto;
       object-fit: contain;
+    }
+
+    .main-wrapper {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
     }
 
     .container {
@@ -53,6 +56,7 @@
       width: 100%;
       box-shadow: 0 10px 25px rgba(0,0,0,0.08);
       margin-bottom: 2rem;
+      text-align: center;
     }
 
     h1, h2 {
@@ -132,14 +136,18 @@
 
     .footer-info {
       max-width: 600px;
-      margin-bottom: 1rem;
+      margin: 1rem auto;
       font-weight: 500;
       color: #004d40;
+      text-align: center;
+      padding: 0 1rem;
     }
 
     .copyright {
       font-size: 0.85rem;
       color: #004d40;
+      text-align: center;
+      margin-bottom: 1rem;
     }
   </style>
 </head>
@@ -148,38 +156,40 @@
     <img src="logo.png" alt="Datahold Logo" class="logo">
   </header>
 
-  <div class="container" id="main">
-    <h1>DATAHOLD</h1>
-    <label for="numFields">Number of Fields:</label>
-    <select id="numFields" onchange="renderFields()">
-      <option value="1">1</option>
-      <option value="2" selected>2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-    </select>
+  <div class="main-wrapper">
+    <div class="container" id="main">
+      <h1>DATAHOLD</h1>
+      <label for="numFields">Number of Fields:</label>
+      <select id="numFields" onchange="renderFields()">
+        <option value="1">1</option>
+        <option value="2" selected>2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
 
-    <div id="fields"></div>
+      <div id="fields"></div>
 
-    <label for="duration">Hold Duration (days):</label>
-    <input type="number" id="duration" value="1" min="1">
+      <label for="duration">Hold Duration (days):</label>
+      <input type="number" id="duration" value="1" min="1">
 
-    <button onclick="holdData()">HOLD DATA</button>
-  </div>
-
-  <div class="container" id="confirmation" style="display:none">
-    <h2>Data Held until <span id="expireTime"></span></h2>
-    <div class="share-box">
-      <a id="shareLink" href="#" target="_blank">Share with recipient</a>
-      <button class="copy-btn" onclick="copyShareLink()">Copy Link</button>
+      <button onclick="holdData()">HOLD DATA</button>
     </div>
-  </div>
 
-  <div class="footer-info">
-    <p>We prioritize your privacy and data integrity. Your content is securely transmitted, stored, and never shared. Trusted by professionals worldwide, DATAHOLD is built with your confidentiality in mind.</p>
-  </div>
+    <div class="container" id="confirmation" style="display:none">
+      <h2>Data Held until <span id="expireTime"></span></h2>
+      <div class="share-box">
+        <a id="shareLink" href="#" target="_blank">Share with recipient</a>
+        <button class="copy-btn" onclick="copyShareLink()">Copy Link</button>
+      </div>
+    </div>
 
-  <div class="copyright">
-    &copy; Fiscon Technologies 2025
+    <div class="footer-info">
+      <p>We prioritize your privacy and data integrity. Your content is securely transmitted, stored, and never shared. Trusted by professionals worldwide, DATAHOLD is built with your confidentiality in mind.</p>
+    </div>
+
+    <div class="copyright">
+      &copy; Fiscon Technologies 2025
+    </div>
   </div>
 
   <script>
@@ -243,9 +253,11 @@
           <header>
             <img src="logo.png" alt="Datahold Logo" class="logo">
           </header>
-          <div class="container">
-            <h2>Data being held</h2>
-            <p>Check back later or contact the sender.</p>
+          <div class="main-wrapper">
+            <div class="container">
+              <h2>Data being held</h2>
+              <p>Check back later or contact the sender.</p>
+            </div>
           </div>
         `;
       }
